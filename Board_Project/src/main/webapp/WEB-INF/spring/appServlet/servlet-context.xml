@@ -13,7 +13,7 @@
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -31,8 +31,37 @@
 		</beans:property>
 	</beans:bean>
 	
+	<interceptors>
+		<interceptor>
+			<mapping path = "/board/write" />
+			<mapping path = "/board/read" />
+			<mapping path = "/board/delete" />
+			<mapping path = "/board/modify" />
+			<mapping path = "/user/logout"/>
+			<mapping path = "/user/modify"/>
+			<beans:bean class = "com.sj.spring.interceptor.UserInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path = "/board/delete" />
+			<mapping path = "/board/modify" />
+			<beans:bean class = "com.sj.spring.interceptor.IsWriterInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path = "/board/write" />
+			<mapping path = "/board/read" />
+			<beans:bean class = "com.sj.spring.interceptor.IsValidatedUser" />
+		</interceptor>
+		<interceptor>
+			<mapping path = "/board/delete_board_comment" />
+			<mapping path = "/board/modify_board_comment" />
+			<beans:bean class = "com.sj.spring.interceptor.BoardCommentInterceptor" />
+		</interceptor>
+	</interceptors>
+	
 	<beans:bean class = "org.springframework.context.support.MessageSourceAccessor">
 		<beans:constructor-arg ref = "messageSource" />
 	</beans:bean>
+	
+	<beans:bean class='org.springframework.web.multipart.support.StandardServletMultipartResolver' id='multipartResolver' />
 	
 </beans:beans>

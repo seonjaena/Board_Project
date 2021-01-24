@@ -22,7 +22,7 @@
 <div class="container" style="margin-top:100px">
 	<div class="card shadow">
 		<div class="card-body">
-			<h4 class="card-title">게시판 이름</h4>
+			<h4 class="card-title">${requestScope.board_type_name }</h4>
 			<table class="table table-hover" id='board_list'>
 				<thead>
 					<tr>
@@ -30,138 +30,70 @@
 						<th class="w-50">제목</th>
 						<th class="text-center d-none d-md-table-cell">작성자</th>
 						<th class="text-center d-none d-md-table-cell">작성날짜</th>
+						<th class="text-center d-none d-md-table-cell">조회수</th>
+						<th class="text-center d-none d-md-table-cell">추천수</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='${root }board/read'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
+					<c:forEach var = "boardList" items = "${requestScope.boardList }">
+						<tr>
+							<td class="text-center d-none d-md-table-cell">${boardList.board_idx }</td>
+							<td><a href='${root }board/read?board_idx=${boardList.board_idx }&board_type_idx=${requestScope.board_type_idx }'>${boardList.board_title }</a></td>
+							<td class="text-center d-none d-md-table-cell">${boardList.user_nickname }</td>
+							<td class="text-center d-none d-md-table-cell">${boardList.board_date }</td>
+							<td class="text-center d-none d-md-table-cell">${boardList.board_views }</td>
+							<td class="text-center d-none d-md-table-cell">${boardList.board_recommendation }</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 			
 			<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center">
-					<li class="page-item">
-						<a href="#" class="page-link">이전</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">1</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">2</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">3</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">4</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">5</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">6</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">7</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">8</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">9</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">10</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">다음</a>
-					</li>
-				</ul>
-			</div>
-			
-			<div class="d-block d-md-none">
-				<ul class="pagination justify-content-center">
-					<li class="page-item">
-						<a href="#" class="page-link">이전</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">다음</a>
-					</li>
+					<c:choose>
+						<c:when test = "${requestScope.pageBean.currentPage == 1 }">
+							<li class="page-item disabled">
+								<a href="#" class="page-link">이전</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item">
+								<a href="${root }board/main?board_type_idx=${requestScope.board_type_idx }&page=${requestScope.pageBean.prevPage }" class="page-link">이전</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+					<c:forEach var = "idx" begin = "${requestScope.pageBean.min }" end = "${requestScope.pageBean.max }">
+						<c:choose>
+							<c:when test = "${requestScope.pageBean.currentPage == idx }">
+								<li class="page-item active">
+									<a href="${root }board/main?board_type_idx=${requestScope.board_type_idx }&page=${idx }" class="page-link">${idx }</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item">
+									<a href="${root }board/main?board_type_idx=${requestScope.board_type_idx }&page=${idx }" class="page-link">${idx }</a>
+								</li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:choose>
+						<c:when test = "${requestScope.pageBean.currentPage == requestScope.pageBean.pageCnt }">
+							<li class="page-item disabled">
+								<a href="#" class="page-link">다음</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item">
+								<a href="${root }board/main?board_type_idx=${requestScope.board_type_idx }&page=${requestScope.pageBean.nextPage }" class="page-link">다음</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
 				</ul>
 			</div>
 			
 			<div class="text-right">
-				<a href="${root }board/write" class="btn btn-primary">글쓰기</a>
+				<a href="${root }board/write?board_type_idx=${requestScope.board_type_idx }" class="btn btn-primary">글쓰기</a>
 			</div>
-			
 		</div>
 	</div>
 </div>
@@ -170,10 +102,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-    

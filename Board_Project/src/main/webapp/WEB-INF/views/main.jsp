@@ -15,18 +15,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-	
-	<!-- 
-	<c:forEach var = "list" items = "${requestScope.list }">
-		<p>${list.user_idx }</p>
-		<p>${list.user_name }</p>
-		<p>${list.user_birth }</p>
-		<p>${list.user_email }</p>
-		<p>${list.user_id }</p>
-		<p>${list.user_pw }</p>
-		<p>${list.user_nickname }</p>
-	</c:forEach>
-	 -->
 	 
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
 
@@ -215,7 +203,8 @@
 		</div>
 	</div>
 </div>
-	
+<br/><br/><br/><br/><br/>
+<a href = "${root }abc">지도</a><br/><br/><br/>
 <c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
 
 </body>

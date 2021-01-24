@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 여기 네임스페이스 중요! 인터페이스명과 namespace를 같게해야됨 -->
+<mapper namespace="com.sj.spring.mapper.BoardMapper">
+
+	<select id = "getBoardTypeName" parameterType = "int" resultType = "String">
+		SELECT board_type_name FROM board_type WHERE board_type_idx = #{board_type_idx}
+	</select>
+	
+	<insert id = "writeBoard" parameterType = "Board">
+		INSERT INTO board (board_type_idx, board_writer_idx, board_title, board_text) VALUES(#{board_type_idx}, #{board_writer_idx}, #{board_title}, #{board_text})
+	</insert>
+	
+	<select id = "getBoardList" parameterType = "int" resultType = "Board">
+		SELECT A.board_idx, A.board_title, B.user_nickname, A.board_date, A.board_views, A.board_recommendation 
+		FROM board as A, user as B 
+		WHERE A.board_writer_idx = B.user_idx 
+		AND A.board_type_idx = #{board_type_idx} 
+		AND A.is_delete = 0 
+		ORDER BY A.board_idx DESC
+	</select>
+	
+	<select id = "getBoardInfo" parameterType = "int" resultType = "Board">
+		SELECT A.board_title, A.board_text, B.user_nickname, A.board_date, A.board_writer_idx 
+		FROM board as A, user as B 
+		WHERE A.board_writer_idx = B.user_idx 
+		AND A.board_idx = #{board_idx} 
+		AND A.is_delete = 0
+	</select>
+	
+	<update id = "addBoardViews" parameterType = "int">
+		UPDATE board SET board_views = board_views + 1 WHERE board_idx = #{board_idx}
+	</update>
+	
+	<update id = "deleteBoardInfo" parameterType = "int">
+		UPDATE board SET is_delete = 1 WHERE board_idx = #{board_idx}
+	</update>
+	
+	<select id = "getContentCnt" parameterType = "int" resultType = "int">
+		SELECT COUNT(*) FROM board WHERE board_type_idx = #{board_type_idx}
+	</select>
+	
+	<insert id = "saveBoardComment" parameterType = "Comment">
+		INSERT INTO board_comment (board_idx, comment_writer_idx, comment_text) 
+		VALUES(#{board_idx}, #{comment_writer_idx}, #{comment_text})
+	</insert>
+	
+	<select id = "getRecentBoardCommentIdx" parameterType = "int" resultType = "int">
+		SELECT comment_idx FROM board_comment WHERE comment_writer_idx = #{comment_writer_idx} ORDER BY comment_idx DESC LIMIT 1
+	</select>
+	
+	<select id = "getBoardCommentList" parameterType = "int" resultType = "Comment">
+		SELECT A.comment_idx, A.board_idx, A.comment_writer_idx, 
+		A.comment_text, B.user_nickname 
+		FROM board_comment as A, user as B 
+		WHERE A.comment_writer_idx = B.user_idx 
+		AND A.board_idx = #{board_idx} 
+		AND A.is_delete = 0 
+		ORDER BY A.comment_idx
+	</select>
+	
+
+	<update id = "deleteBoardComment" parameterType = "int">
+		UPDATE board_comment SET is_delete = 1 WHERE comment_idx = #{comment_idx}
+	</update>
+
+</mapper>

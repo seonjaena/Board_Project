@@ -8,9 +8,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 타입 얼라이어스 지정============================ -->
 	<typeAliases>
 		<typeAlias type="com.sj.spring.vo.UserVo" alias="User" />
+		<typeAlias type="com.sj.spring.vo.BoardVo" alias="Board" />
+		<typeAlias type="com.sj.spring.vo.CommentVo" alias="Comment" />
 	</typeAliases>
 	<!-- mapper 파일 지정============================= -->
 	<mappers>
 		<mapper resource="spring/mapper/UserMapper.xml" />
+		<mapper resource="spring/mapper/BoardMapper.xml" />
+		<mapper resource="spring/mapper/MapMapper.xml" />
 	</mappers>
 </configuration>

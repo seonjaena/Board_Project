@@ -13,6 +13,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<style>
+	.comment_comment_div {
+		border : 1px solid grey;
+		padding-top : 1rem;
+		padding-bottom : 1rem;
+		padding-left : 3%;
+		padding-right : 3%;
+		margin-top : 2rem;
+		background-color : grey;
+	}
+</style>
 </head>
 <body>
 	
@@ -24,6 +35,7 @@
 		<div class="col-sm-6">
 			<div class="card shadow">
 				<div class="card-body">
+					<input type = "hidden" class = "board_idx" readonly = "readonly" value = "${requestScope.board_idx }" />
 					<div class="form-group">
 						<label for="board_writer_name">작성자</label>
 						<input type="text" id="board_writer_name" name="board_writer_name" class="form-control" value="홍길동" disabled="disabled"/>
@@ -34,21 +46,60 @@
 					</div>
 					<div class="form-group">
 						<label for="board_subject">제목</label>
-						<input type="text" id="board_subject" name="board_subject" class="form-control" value="제목입니다" disabled="disabled"/>
+						<input type="text" id="board_subject" name="board_subject" class="form-control" value="${requestScope.readBoardBean.board_title }" disabled="disabled"/>
 					</div>
 					<div class="form-group">
 						<label for="board_content">내용</label>
-						<textarea id="board_content" name="board_content" class="form-control" rows="10" style="resize:none" disabled="disabled">본문입니다</textarea>
-					</div>
-					<div class="form-group">
-						<label for="board_file">첨부 이미지</label>
-						<img src="${root }image/logo.png" width="100%"/>						
+						<div>${requestScope.readBoardBean.board_text }</div>
 					</div>
 					<div class="form-group">
 						<div class="text-right">
-							<a href="${root }board/main" class="btn btn-primary">목록보기</a>
-							<a href="${root }board/modify" class="btn btn-info">수정하기</a>
-							<a href="${root }board/delete" class="btn btn-danger">삭제하기</a>
+							<a href="${root }board/main?board_type_idx=${requestScope.board_type_idx }" class="btn btn-primary">목록보기</a>
+							<c:if test = "${requestScope.readBoardBean.board_writer_idx == sessionScope.loginUserBean.user_idx }">
+								<a href="${root }board/modify?board_type_idx=${requestScope.board_type_idx }&board_idx=${requestScope.board_idx }" class="btn btn-info">수정하기</a>
+								<a href="${root }board/delete?board_type_idx=${requestScope.board_type_idx }&board_idx=${requestScope.board_idx }" class="btn btn-danger">삭제하기</a>
+							</c:if>
+						</div>
+					</div>
+				</div>
+			</div><br/>
+			<div class="card shadow">
+				<div class = "card-body">
+					<c:forEach var = "commentList" items = "${requestScope.commentList }" varStatus = "status">
+						<div class = "comment_div form-group">
+							<b class = "comment_writer">${commentList.user_nickname }</b><br/>
+							<div class = "form-control">${commentList.comment_text }</div><br/>
+							<div align = "right">
+								<c:if test = "${sessionScope.loginUserBean.user_idx == commentList.comment_writer_idx }">
+									<button type = "button" class = "delete_comment_btn btn btn-warning" onclick = "delete_board_comment($(this), '${root}', ${commentList.comment_writer_idx })" value = "${commentList.comment_idx }">삭제</button>&nbsp;
+									<button type = "button" class = "modify_comment_btn btn btn-info" onclick = "modify_board_comment($(this), ${root}, '${commentList.comment_text }')" value = "${commentList.comment_idx }">수정</button>&nbsp;
+								</c:if>
+								<button type = "button" class = "btn btn-primary" onclick = "make_comment_comment(${root})">답글달기</button>&nbsp;
+								<c:if test = "${sessionScope.loginUserBean.user_idx != commentList.comment_writer_idx }">
+									<button type = "button" class = "btn btn-danger">신고</button>
+								</c:if>
+							</div>
+							<div class = "form-group comment_comment_div" style = "margin-left:5%">
+								<b>ㄴ</b>
+								<b class = "comment_writer">홍길동</b><br/>
+								<div class = "form-control">그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥</div>
+								<div align = "right">
+									<button type = "button" class = "btn btn-primary" onclick = "save_comment(${root})">저장</button>&nbsp;
+								</div>
+							</div>
+						</div>
+						<div class = "empty_comment_div"></div>
+					</c:forEach>
+				</div>
+			</div><br/>
+			<div class = "card shadow">
+				<div class = "card-body">
+					<h5>댓글 작성</h5><br/>
+					<div class = "form-group">
+						<b class = "comment_writer">${sessionScope.loginUserBean.user_nickname }</b><br/>
+						<textarea rows = "4" class = "comment_body form-control" style = "resize : none" maxlength = "116"></textarea><br/>
+						<div align = "right">
+							<button type = "button" class = "btn btn-primary" onclick = "save_comment(${root}, ${requestScope.board_idx }, '${sessionScope.loginUserBean.user_nickname }')">저장</button>&nbsp;
 						</div>
 					</div>
 				</div>
@@ -60,7 +111,6 @@
 
 
 <c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
-
+<script src = "${root }js/commentJS.js"></script>
 </body>
 </html>
-    
