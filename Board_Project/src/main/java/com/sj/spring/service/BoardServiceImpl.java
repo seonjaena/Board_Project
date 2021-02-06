@@ -6,12 +6,14 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.sj.spring.mapper.BoardMapper;
 import com.sj.spring.vo.BoardVo;
 import com.sj.spring.vo.CommentVo;
 import com.sj.spring.vo.PageVo;
+import com.sj.spring.vo.RecommendationVo;
 @Service
 @PropertySource("/WEB-INF/properties/option.properties")
 public class BoardServiceImpl implements BoardService {
@@ -56,6 +58,22 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteBoardInfo(int board_idx) {
 		boardMapper.deleteBoardInfo(board_idx);
 	}
+	
+	@Override
+	public BoardVo getModifyBoardInfo(BoardVo modifyBoardBean, int board_idx) {
+		BoardVo boardVo = boardMapper.getModifyBoardInfo(board_idx);
+		modifyBoardBean.setBoard_idx(board_idx);
+		modifyBoardBean.setBoard_title(boardVo.getBoard_title());
+		modifyBoardBean.setBoard_text(boardVo.getBoard_text());
+		modifyBoardBean.setBoard_date(boardVo.getBoard_date());
+		modifyBoardBean.setUser_nickname(boardVo.getUser_nickname());
+		return modifyBoardBean;
+	}
+	
+	@Override
+	public void modifyBoardInfo(BoardVo modifyBoardBean) {
+		boardMapper.modifyBoardInfo(modifyBoardBean);
+	}
 
 	@Override
 	public PageVo getContentCnt(int board_type_idx, int page) {
@@ -82,6 +100,45 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void deleteBoardComment(int comment_idx) {
 		boardMapper.deleteBoardComment(comment_idx);
+	}
+
+	@Override
+	public RecommendationVo isUserRecommendedThis(int board_idx, int user_idx) {
+		RecommendationVo isRecommended = new RecommendationVo();
+		isRecommended.setBoard_idx(board_idx);
+		isRecommended.setUser_idx(user_idx);
+		return boardMapper.isUserRecommendedThis(isRecommended);
+	}
+
+	@Override
+	public void recommendThis_new(RecommendationVo recommendationVo) {
+		boardMapper.recommendThis_new(recommendationVo);
+	}
+
+	@Override
+	public void recommendThis_already(RecommendationVo recommendationVo) {
+		boardMapper.recommendThis_already(recommendationVo);
+	}
+
+	@Override
+	public void cancledRecommendThis(RecommendationVo recommendationVo) {
+		boardMapper.cancledRecommendThis(recommendationVo);
+	}
+
+	@Override
+	public void addRecommendation(int board_idx) {
+		boardMapper.addRecommendation(board_idx);
+	}
+
+	@Override
+	public void subRecommendation(int board_idx) {
+		boardMapper.subRecommendation(board_idx);
+	}
+
+	@Scheduled(cron = "0 30 23 * * *")
+	@Override
+	public void getHotBoard() {
+		boardMapper.downHotBoard();
 	}
 
 }

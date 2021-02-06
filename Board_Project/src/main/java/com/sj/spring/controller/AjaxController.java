@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sj.spring.service.BoardService;
 import com.sj.spring.vo.CommentVo;
+import com.sj.spring.vo.RecommendationVo;
 import com.sj.spring.vo.UserVo;
 
 @RestController
@@ -39,4 +40,32 @@ public class AjaxController {
 
 	}
 	
+	@GetMapping(value = "/board/modify_board_comment")
+	public void modify_board_comment(@RequestParam(value = "data") String data, HttpSession session) {
+		
+	}
+	
+	@GetMapping(value = "/board/toggleRecommend")
+	public String toggleRecommend(@RequestParam(value = "state") int state, HttpSession session, 
+								  @RequestParam(value = "board_idx") int board_idx) {
+		
+		RecommendationVo recommendationVo = new RecommendationVo();
+		recommendationVo.setBoard_idx(board_idx);
+		recommendationVo.setUser_idx(((UserVo)session.getAttribute("loginUserBean")).getUser_idx());
+		if(state == 0) {
+			if(boardService.isUserRecommendedThis(board_idx, ((UserVo)session.getAttribute("loginUserBean")).getUser_idx()) != null) {
+				boardService.recommendThis_already(recommendationVo);
+			}else {
+				boardService.recommendThis_new(recommendationVo);
+			}
+			boardService.addRecommendation(board_idx);
+			return "1";
+		}else if(state == 1) {
+			boardService.cancledRecommendThis(recommendationVo);
+			boardService.subRecommendation(board_idx);
+			return "0";
+		}else {
+			return "-100";
+		}
+	}
 }

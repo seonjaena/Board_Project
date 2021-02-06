@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.sj.spring.vo.UserVo" alias="User" />
 		<typeAlias type="com.sj.spring.vo.BoardVo" alias="Board" />
 		<typeAlias type="com.sj.spring.vo.CommentVo" alias="Comment" />
+		<typeAlias type="com.sj.spring.vo.RecommendationVo" alias="Recommend" />
 	</typeAliases>
 	<!-- mapper 파일 지정============================= -->
 	<mappers>

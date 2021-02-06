@@ -74,6 +74,7 @@ public class BoardController {
 		model.addAttribute("readBoardBean", readBoardBean);
 		model.addAttribute("board_type_idx", board_type_idx);
 		model.addAttribute("commentList", commentList);
+		model.addAttribute("is_recommended", boardService.isUserRecommendedThis(board_idx, ((UserVo)session.getAttribute("loginUserBean")).getUser_idx()));
 		return "board/read";
 	}
 	
@@ -84,6 +85,30 @@ public class BoardController {
 		boardService.deleteBoardInfo(board_idx);
 		model.addAttribute("board_type_idx", board_type_idx);
 		return "board/delete";
+	}
+	
+	@GetMapping(value = "/modify")
+	public String modify(@RequestParam("board_type_idx") int board_type_idx, 
+			 @RequestParam("board_idx") int board_idx, 
+			 @ModelAttribute("modifyBoardBean") BoardVo modifyBoardBean) {
+		
+		boardService.getModifyBoardInfo(modifyBoardBean, board_idx);
+		modifyBoardBean.setBoard_type_idx(board_type_idx);
+		return "board/modify";
+		
+	}
+	
+	@PostMapping(value = "/modify_pro")
+	public String modify_pro(@Valid @ModelAttribute("modifyBoardBean") BoardVo modifyBoardBean,
+							 BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			System.out.println(result.getAllErrors());
+			return "board/modify";
+		}
+		boardService.modifyBoardInfo(modifyBoardBean);
+		model.addAttribute("board_idx", modifyBoardBean.getBoard_idx());
+		model.addAttribute("board_type_idx", modifyBoardBean.getBoard_type_idx());
+		return "board/modify_success";
 	}
 	
 }

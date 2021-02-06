@@ -22,7 +22,8 @@
 	</select>
 	
 	<select id = "getBoardInfo" parameterType = "int" resultType = "Board">
-		SELECT A.board_title, A.board_text, B.user_nickname, A.board_date, A.board_writer_idx 
+		SELECT A.board_title, A.board_text, B.user_nickname, 
+		A.board_date, A.board_writer_idx, A.board_recommendation  
 		FROM board as A, user as B 
 		WHERE A.board_writer_idx = B.user_idx 
 		AND A.board_idx = #{board_idx} 
@@ -35,6 +36,18 @@
 	
 	<update id = "deleteBoardInfo" parameterType = "int">
 		UPDATE board SET is_delete = 1 WHERE board_idx = #{board_idx}
+	</update>
+	
+	<select id = "getModifyBoardInfo" parameterType = "int" resultType = "Board">
+		SELECT A.board_title, A.board_text, A.board_date, B.user_nickname 
+		FROM board as A, user as B 
+		WHERE A.board_writer_idx = B.user_idx 
+		AND board_idx = #{board_idx}
+	</select>
+	
+	<update id = "modifyBoardInfo" parameterType = "Board">
+		UPDATE board SET board_title = #{board_title}, board_text = #{board_text}, is_modified = 1 
+		WHERE board_idx = #{board_idx}
 	</update>
 	
 	<select id = "getContentCnt" parameterType = "int" resultType = "int">
@@ -63,6 +76,34 @@
 
 	<update id = "deleteBoardComment" parameterType = "int">
 		UPDATE board_comment SET is_delete = 1 WHERE comment_idx = #{comment_idx}
+	</update>
+	
+	<select id = "isUserRecommendedThis" parameterType = "Recommend" resultType = "Recommend">
+		SELECT * FROM recommendation_list WHERE board_idx = #{board_idx} AND user_idx = #{user_idx}
+	</select>
+	
+	<insert id = "recommendThis_new" parameterType = "Recommend">
+		INSERT INTO recommendation_list (board_idx, user_idx) VALUES (#{board_idx}, #{user_idx})
+	</insert>
+	
+	<update id = "recommendThis_already" parameterType = "Recommend">
+		UPDATE recommendation_list SET is_delete = 0 WHERE user_idx = #{user_idx} AND board_idx = #{board_idx}
+	</update>
+	
+	<update id = "cancledRecommendThis" parameterType = "Recommend">
+		UPDATE recommendation_list SET is_delete = 1 WHERE board_idx = #{board_idx} AND user_idx = #{user_idx}
+	</update>
+	
+	<update id = "addRecommendation" parameterType = "int">
+		UPDATE board SET board_recommendation = board_recommendation + 1 WHERE board_idx = #{board_idx}
+	</update>
+	
+	<update id = "subRecommendation" parameterType = "int">
+		UPDATE board SET board_recommendation = board_recommendation - 1 WHERE board_idx = #{board_idx}
+	</update>
+	
+	<update id = "downHotBoard">
+		UPDATE board SET is_hot = 0 WHERE is_hot = 1
 	</update>
 
 </mapper>

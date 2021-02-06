@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var='root' value='${pageContext.request.contextPath }/'/>
 <!DOCTYPE html>
 <html>
@@ -10,6 +11,7 @@
 <title>미니 프로젝트</title>
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -41,8 +43,8 @@
 						<input type="text" id="board_writer_name" name="board_writer_name" class="form-control" value="홍길동" disabled="disabled"/>
 					</div>
 					<div class="form-group">
-						<label for="board_date">작성날짜</label>
-						<input type="text" id="board_date" name="board_date" class="form-control" value="2018-7-20" disabled="disabled"/>
+						<label for="board_date">작성날짜</label>						
+						<input type="text" id="board_date" name="board_date" class="form-control" value="<fmt:formatDate value = '${requestScope.readBoardBean.board_date}' pattern = 'yyyy-MM-dd HH:mm' />" disabled="disabled"/>
 					</div>
 					<div class="form-group">
 						<label for="board_subject">제목</label>
@@ -53,6 +55,20 @@
 						<div>${requestScope.readBoardBean.board_text }</div>
 					</div>
 					<div class="form-group">
+						<div class="text-left">
+							<c:choose>
+								<c:when test = "${requestScope.is_recommended != null && requestScope.is_recommended.is_delete == 0 }">
+									<button type = "button" class = "recommendation_button btn btn-default" onclick = "toggleRecommendation(${root}, 1, ${requestScope.board_idx })">
+										<i style = "color:blue" class = "fa fa-thumbs-o-up"></i>&nbsp;${requestScope.readBoardBean.board_recommendation }<br/><b>추천</b>
+									</button>
+								</c:when>
+								<c:otherwise>
+									<button type = "button" class = "recommendation_button btn btn-default" onclick = "toggleRecommendation(${root}, 0, ${requestScope.board_idx })">
+										<i class = "fa fa-thumbs-o-up"></i>&nbsp;${requestScope.readBoardBean.board_recommendation }<br/><b>추천</b>
+									</button>
+								</c:otherwise>
+							</c:choose>
+						</div>
 						<div class="text-right">
 							<a href="${root }board/main?board_type_idx=${requestScope.board_type_idx }" class="btn btn-primary">목록보기</a>
 							<c:if test = "${requestScope.readBoardBean.board_writer_idx == sessionScope.loginUserBean.user_idx }">
@@ -64,7 +80,7 @@
 				</div>
 			</div><br/>
 			<div class="card shadow">
-				<div class = "card-body">
+				<div class = "comments_div card-body">
 					<c:forEach var = "commentList" items = "${requestScope.commentList }" varStatus = "status">
 						<div class = "comment_div form-group">
 							<b class = "comment_writer">${commentList.user_nickname }</b><br/>
@@ -112,5 +128,27 @@
 
 <c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
 <script src = "${root }js/commentJS.js"></script>
+<script>
+	function toggleRecommendation(path, state, board_idx){
+		$(".recommendation_button").prop("disability", true);
+		$.ajax({
+			url : path + "board/toggleRecommend?state=" + state + "&board_idx=" + board_idx, 
+			dataType : "text", 
+			type : "GET", 
+			success : function(result) {
+				if(result == "0") {
+					$(".recommendation_button").replaceWith("<button type = 'button' class = 'recommendation_button btn btn-default' onclick = 'toggleRecommendation(" + path + ", " + result + ", " + board_idx + ")'></button>");
+					$(".recommendation_button").append("<i class = 'fa fa-thumbs-o-up'></i><br/><b>추천</b>");
+				}else if(result == "1") {
+					$(".recommendation_button").replaceWith("<button type = 'button' class = 'recommendation_button btn btn-default' onclick = 'toggleRecommendation(" + path + ", " + result + ", " + board_idx + ")'></button>");
+					$(".recommendation_button").append("<i style = 'color:blue' class = 'fa fa-thumbs-o-up'></i><br/><b>추천</b>");
+				}
+				
+				$(".recommendation_button").prop("disability", false);
+				
+			}
+		})
+	}
+</script>
 </body>
 </html>

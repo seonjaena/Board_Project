@@ -50,6 +50,7 @@ public class UserController {
 						   HttpSession session, HttpServletRequest request) throws MessagingException {
 		
 		if(result.hasErrors()) {
+			System.out.println(result.getAllErrors());
 			return "user/join";
 		}
 		
