@@ -1,6 +1,5 @@
-/**
- * 
- */
+/*
+*/
 function save_comment(path, board_idx, user_nickname) {
 	var comment_body = $(".comment_body").val();
 	var data1 = comment_body + "," + board_idx;
@@ -20,7 +19,7 @@ function save_comment(path, board_idx, user_nickname) {
 			"<div class = 'form-control'>" + comment_body + "</div><br/>" + 
 			"<div align = 'right'>" + 
 			"<button type = 'button' class = 'btn btn-warning' onclick = 'delete_board_comment($(this), " + path + ", " + return_first_data + ")' value = '" + return_second_data + "'>삭제</button>&nbsp;" + 
-			"<button type = 'button' class = 'btn btn-info' onclick = 'modify_board_comment($(this), " + path + ", \"" + comment_body + "\")' value = '" + return_second_data + "'>수정</button>&nbsp;" + 
+			"<button type = 'button' class = 'btn btn-info' onclick = 'modify_board_comment($(this), " + path + ", \"" + comment_body + "\", " + return_first_data + ")' value = '" + return_second_data + "'>수정</button>&nbsp;" + 
 			"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + 
 			"</div>" + 
 			"<div class = 'form-group comment_comment_div' style = 'margin-left:5%'>" + 
@@ -56,23 +55,21 @@ function delete_board_comment(my_val, path, writer_idx) {
 
 
 
-function modify_board_comment(my_value, path, comment_text) {
-	var return_second_data = my_value.val();
-	my_value.parent().prev().prev().replaceWith("<textarea rows = '4' class = 'comment_body form-control' style = 'resize : none' maxlength = '116'>" + comment_text + "</textarea>");
-	my_value.parent().replaceWith("<div align = 'right'>" + 
-			"<button type = 'button' class = 'btn btn-primary'>확인</button>&nbsp;" + 
-			"<button type = 'button' class = 'btn btn-danger' onclick = 'cancleCommentModification($(this),\"" + comment_text + "\", " + return_second_data + ", " + path + ")'>취소</button>&nbsp;" + 
+function modify_board_comment(my_val, path, comment_text, writer_idx) {
+	var comment_idx = my_val.val();
+	my_val.parent().prev().prev().replaceWith("<textarea rows = '4' class = 'comment_body form-control' style = 'resize : none' maxlength = '116'>" + comment_text + "</textarea>");
+	my_val.parent().replaceWith("<div align = 'right'>" + 
+			"<button type = 'button' class = 'btn btn-primary' onclick = 'modify_board_comment_confirm($(this), \"" +  path + "\", " + comment_idx + ", " + writer_idx + ")'>확인</button>&nbsp;" + 
+			"<button type = 'button' class = 'btn btn-danger' onclick = 'cancleCommentModification($(this), " + writer_idx + ", \"" + comment_text + "\", " + comment_idx + ", " + path + ")'>취소</button>&nbsp;" + 
 			"</div>");
 }
 
-function modify_board_comment_confirm(my_val, writer_idx, path) {
+function modify_board_comment_confirm(my_val, path, comment_idx, writer_idx) {
 	
 	if(confirm("수정하시겠습니까?") == false) {
 		return;
 	}
-	
-	var comment_text = my_val.parent().prev().val();
-	var data1 = comment_text + "," + writer_idx;
+	var data1 = my_val.parent().prev().prev().val() + "," + comment_idx;
 	data = new FormData();
 	data.append("data", data1);
 	
@@ -83,7 +80,12 @@ function modify_board_comment_confirm(my_val, writer_idx, path) {
 		contentType : false, 
 		processData : false, 
 		success : function() {
-			alert("성공");
+			my_val.parent().prev().prev().replaceWith("<div class = 'form-control'>" + my_val.parent().prev().prev().val() + "</div>");
+			my_val.parent().replaceWith("<div align = 'right'>" + 
+					"<button type = 'button' class = 'btn btn-warning' onclick = 'delete_board_comment($(this), " + path + ", " + writer_idx + ")' value = '" + comment_idx + "'>삭제</button>&nbsp;" + 
+					"<button type = 'button' class = 'btn btn-info' onclick = 'modify_board_comment($(this), " + path + ", \"" + my_val.parent().prev().prev().val() + "\")' value = '" + comment_idx + "'>수정</button>&nbsp;" + 
+					"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + 
+					"</div>")
 		}, 
 		error : function() {
 			alert("실패");
@@ -92,10 +94,10 @@ function modify_board_comment_confirm(my_val, writer_idx, path) {
 	
 }
 
-function cancleCommentModification(my_value, comment_body, return_second_data, path) {
-	my_value.parent().prev().prev().replaceWith("<div class = 'form-control'>" + comment_body + "</div>");
-	my_value.parent().replaceWith("<div align = 'right'>" + 
-			"<button type = 'button' class = 'btn btn-warning' onclick = 'delete_board_comment($(this), " + path + ")' value = '" + return_second_data + "'>삭제</button>&nbsp;" + 
+function cancleCommentModification(my_val, writer_idx, comment_body, return_second_data, path) {
+	my_val.parent().prev().prev().replaceWith("<div class = 'form-control'>" + comment_body + "</div>");
+	my_val.parent().replaceWith("<div align = 'right'>" + 
+			"<button type = 'button' class = 'btn btn-warning' onclick = 'delete_board_comment($(this), " + path + ", " + writer_idx + ")' value = '" + return_second_data + "'>삭제</button>&nbsp;" + 
 			"<button type = 'button' class = 'btn btn-info' onclick = 'modify_board_comment($(this), " + path + ", \"" + comment_body + "\")' value = '" + return_second_data + "'>수정</button>&nbsp;" + 
 			"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + 
 			"</div>")

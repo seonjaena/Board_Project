@@ -88,7 +88,7 @@
 							<div align = "right">
 								<c:if test = "${sessionScope.loginUserBean.user_idx == commentList.comment_writer_idx }">
 									<button type = "button" class = "delete_comment_btn btn btn-warning" onclick = "delete_board_comment($(this), '${root}', ${commentList.comment_writer_idx })" value = "${commentList.comment_idx }">삭제</button>&nbsp;
-									<button type = "button" class = "modify_comment_btn btn btn-info" onclick = "modify_board_comment($(this), ${root}, '${commentList.comment_text }')" value = "${commentList.comment_idx }">수정</button>&nbsp;
+									<button type = "button" class = "modify_comment_btn btn btn-info" onclick = "modify_board_comment($(this), '${root}', '${commentList.comment_text }', ${commentList.comment_writer_idx })" value = "${commentList.comment_idx }">수정</button>&nbsp;
 								</c:if>
 								<button type = "button" class = "btn btn-primary" onclick = "make_comment_comment(${root})">답글달기</button>&nbsp;
 								<c:if test = "${sessionScope.loginUserBean.user_idx != commentList.comment_writer_idx }">

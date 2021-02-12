@@ -40,9 +40,14 @@ public class AjaxController {
 
 	}
 	
-	@GetMapping(value = "/board/modify_board_comment")
+	@PostMapping(value = "/board/modify_board_comment")
 	public void modify_board_comment(@RequestParam(value = "data") String data, HttpSession session) {
-		
+		int comment_idx = Integer.parseInt(data.substring(data.lastIndexOf(",") + 1));
+		String comment_text = data.substring(0, data.lastIndexOf(","));
+		CommentVo modifyCommentBean = new CommentVo();
+		modifyCommentBean.setComment_idx(comment_idx);
+		modifyCommentBean.setComment_text(comment_text);
+		boardService.modifyBoardComment(modifyCommentBean);
 	}
 	
 	@GetMapping(value = "/board/toggleRecommend")

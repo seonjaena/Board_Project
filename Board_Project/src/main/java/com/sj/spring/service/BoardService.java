@@ -22,6 +22,7 @@ public interface BoardService {
 	int getRecentBoardCommentIdx(int comment_writer_idx);
 	List<CommentVo> getBoardCommentList(int board_idx);
 	void deleteBoardComment(int comment_idx);
+	void modifyBoardComment(CommentVo modifyCommentBean);
 	RecommendationVo isUserRecommendedThis(int board_idx, int user_idx);
 	void recommendThis_new(RecommendationVo recommendationVo);
 	void recommendThis_already(RecommendationVo recommendationVo);

@@ -78,6 +78,10 @@
 		UPDATE board_comment SET is_delete = 1 WHERE comment_idx = #{comment_idx}
 	</update>
 	
+	<update id = "modifyBoardComment" parameterType = "Comment">
+		UPDATE board_comment SET comment_text = #{comment_text}, is_modified = 1 WHERE comment_idx = #{comment_idx}
+	</update>
+	
 	<select id = "isUserRecommendedThis" parameterType = "Recommend" resultType = "Recommend">
 		SELECT * FROM recommendation_list WHERE board_idx = #{board_idx} AND user_idx = #{user_idx}
 	</select>

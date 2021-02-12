@@ -101,6 +101,11 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteBoardComment(int comment_idx) {
 		boardMapper.deleteBoardComment(comment_idx);
 	}
+	
+	@Override
+	public void modifyBoardComment(CommentVo modifyCommentBean) {
+		boardMapper.modifyBoardComment(modifyCommentBean);
+	}
 
 	@Override
 	public RecommendationVo isUserRecommendedThis(int board_idx, int user_idx) {
