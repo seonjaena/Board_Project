@@ -117,6 +117,12 @@ public class UserController {
 		
 	}
 	
+	@GetMapping(value = "/mypage")
+	public String mypage(HttpSession session, HttpServletRequest request) {
+		request.setAttribute("user_picture", userService.getUserPicture(((UserVo)session.getAttribute("loginUserBean")).getUser_idx()));
+		return "user/mypage";
+	}
+	
 	@GetMapping(value = "/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();

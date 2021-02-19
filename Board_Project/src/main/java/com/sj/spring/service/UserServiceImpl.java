@@ -74,4 +74,9 @@ public class UserServiceImpl implements UserService {
 		userMapper.changeIsValidation(user_email);
 	}
 
+	@Override
+	public String getUserPicture(int user_idx) {
+		return userMapper.getUserPicture(user_idx);
+	}
+
 }

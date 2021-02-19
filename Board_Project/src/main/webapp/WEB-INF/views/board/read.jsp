@@ -115,7 +115,7 @@
 						<b class = "comment_writer">${sessionScope.loginUserBean.user_nickname }</b><br/>
 						<textarea rows = "4" class = "comment_body form-control" style = "resize : none" maxlength = "116"></textarea><br/>
 						<div align = "right">
-							<button type = "button" class = "btn btn-primary" onclick = "save_comment(${root}, ${requestScope.board_idx }, '${sessionScope.loginUserBean.user_nickname }')">저장</button>&nbsp;
+							<button type = "button" class = "btn btn-primary" onclick = "save_comment(${root}, ${requestScope.board_idx })">저장</button>&nbsp;
 						</div>
 					</div>
 				</div>

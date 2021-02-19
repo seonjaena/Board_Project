@@ -19,7 +19,7 @@ public class AjaxController {
 	@Autowired
 	private BoardService boardService;
 	
-	@PostMapping(value = "/board/write_board_comment")
+	@PostMapping(value = "/board/write_board_comment", produces = "application/text;charset=utf8")
 	public String write_board_comment(@RequestParam(value = "data", required = false) String data, 
 									  HttpSession session) {
 		int board_idx = Integer.parseInt(data.substring(data.lastIndexOf(",") + 1));
@@ -30,7 +30,7 @@ public class AjaxController {
 		writeCommentBean.setBoard_idx(board_idx);
 		writeCommentBean.setComment_text(comment_text);
 		boardService.saveBoardComment(writeCommentBean);
-		return String.valueOf(loginUserBean.getUser_idx()) + "," + String.valueOf(boardService.getRecentBoardCommentIdx(loginUserBean.getUser_idx()));
+		return ((UserVo)session.getAttribute("loginUserBean")).getUser_nickname() + "," + String.valueOf(loginUserBean.getUser_idx()) + "," + String.valueOf(boardService.getRecentBoardCommentIdx(loginUserBean.getUser_idx()));
 	}
 	
 	@GetMapping(value = "/board/delete_board_comment")

@@ -28,7 +28,7 @@
 			<c:choose>
 				<c:when test = "${sessionScope.loginUserBean != null }">
 					<li class="nav-item">
-						<a href="${root }user/modify" class="nav-link">정보수정</a>
+						<a href="${root }user/mypage" class="nav-link">마이페이지</a>
 					</li>
 					<li class="nav-item">
 						<a href="${root }user/logout" class="nav-link">로그아웃</a>

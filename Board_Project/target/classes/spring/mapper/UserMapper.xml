@@ -47,5 +47,9 @@
    	<update id = "changeIsValidation" parameterType = "String">
    		UPDATE user SET is_validation = 1 WHERE user_email = #{user_email}
    	</update>
+   	
+   	<select id = "getUserPicture" parameterType = "int" resultType = "String">
+   		SELECT picture_name FROM user_picture WHERE user_idx = #{user_idx}
+   	</select>
 	
 </mapper>

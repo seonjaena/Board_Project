@@ -18,5 +18,6 @@ public interface UserService {
 	String getValidationCode(String user_email);
 	void deleteValidationCode(String user_email);
 	void changeIsValidation(String user_email);
+	String getUserPicture(int user_idx);
 	
 }
