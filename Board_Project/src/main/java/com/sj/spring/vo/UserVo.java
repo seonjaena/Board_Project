@@ -41,7 +41,6 @@ public class UserVo {
 	@NotBlank
 	private String main_addr;
 	
-	@NotBlank
 	private String reference_addr;
 	
 	@NotBlank

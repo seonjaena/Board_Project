@@ -21,7 +21,7 @@ function save_comment(path, board_idx) {
 			"<div align = 'right'>" + 
 			"<button type = 'button' class = 'btn btn-warning' onclick = 'delete_board_comment($(this), " + path + ", " + writer_idx + ")' value = '" + comment_idx + "'>삭제</button>&nbsp;" + 
 			"<button type = 'button' class = 'btn btn-info' onclick = 'modify_board_comment($(this), " + path + ", \"" + comment_text + "\", " + writer_idx + ")' value = '" + comment_idx + "'>수정</button>&nbsp;" + 
-			"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + 
+			/*"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + */
 			"</div>" + 
 			"<div class = 'form-group comment_comment_div' style = 'margin-left:5%'>" + 
 			"<b>ㄴ</b>" + 
@@ -86,7 +86,7 @@ function modify_board_comment_confirm(my_val, path, comment_idx, writer_idx, com
 			my_val.parent().replaceWith("<div align = 'right'>" + 
 					"<button type = 'button' class = 'btn btn-warning' onclick = 'delete_board_comment($(this), " + path + ", " + writer_idx + ")' value = '" + comment_idx + "'>삭제</button>&nbsp;" + 
 					"<button type = 'button' class = 'btn btn-info' onclick = 'modify_board_comment($(this), " + path + ", \"" + comment_body + "\", " + writer_idx + ")' value = '" + comment_idx + "'>수정</button>&nbsp;" + 
-					"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + 
+					/*"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + */
 					"</div>")
 		}, 
 		error : function() {
@@ -101,6 +101,6 @@ function cancleCommentModification(my_val, writer_idx, comment_text, comment_idx
 	my_val.parent().replaceWith("<div align = 'right'>" + 
 				"<button type = 'button' class = 'btn btn-warning' onclick = 'delete_board_comment($(this), " + path + ", " + writer_idx + ")' value = '" + comment_idx + "'>삭제</button>&nbsp;" + 
 				"<button type = 'button' class = 'btn btn-info' onclick = 'modify_board_comment($(this), " + path + ", \"" + comment_text + "\", " + writer_idx + ")' value = '" + comment_idx + "'>수정</button>&nbsp;" + 
-				"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + 
+				/*"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + */
 				"</div>")
 }

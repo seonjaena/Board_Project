@@ -30,9 +30,6 @@
 					<li class="nav-item">
 						<a href="${root }user/mypage" class="nav-link">마이페이지</a>
 					</li>
-					<li class="nav-item">
-						<a href="${root }user/logout" class="nav-link">로그아웃</a>
-					</li>
 				</c:when>
 				<c:otherwise>
 					<li class="nav-item">

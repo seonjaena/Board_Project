@@ -40,7 +40,7 @@
 					<input type = "hidden" class = "board_idx" readonly = "readonly" value = "${requestScope.board_idx }" />
 					<div class="form-group">
 						<label for="board_writer_name">작성자</label>
-						<input type="text" id="board_writer_name" name="board_writer_name" class="form-control" value="홍길동" disabled="disabled"/>
+						<input type="text" id="board_writer_name" name="board_writer_name" class="form-control" value="${requestScope.readBoardBean.user_nickname }" disabled="disabled"/>
 					</div>
 					<div class="form-group">
 						<label for="board_date">작성날짜</label>						
@@ -90,7 +90,6 @@
 									<button type = "button" class = "delete_comment_btn btn btn-warning" onclick = "delete_board_comment($(this), '${root}', ${commentList.comment_writer_idx })" value = "${commentList.comment_idx }">삭제</button>&nbsp;
 									<button type = "button" class = "modify_comment_btn btn btn-info" onclick = "modify_board_comment($(this), '${root}', '${commentList.comment_text }', ${commentList.comment_writer_idx })" value = "${commentList.comment_idx }">수정</button>&nbsp;
 								</c:if>
-								<button type = "button" class = "btn btn-primary" onclick = "make_comment_comment(${root})">답글달기</button>&nbsp;
 								<c:if test = "${sessionScope.loginUserBean.user_idx != commentList.comment_writer_idx }">
 									<button type = "button" class = "btn btn-danger">신고</button>
 								</c:if>

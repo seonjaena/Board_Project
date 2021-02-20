@@ -31,16 +31,17 @@
 	            	</c:otherwise>
 	            </c:choose>
                 <br><br>
-                <b>나또</b> 회원님
+                <b>${sessionScope.loginUserBean.user_nickname }</b>
             </div>
             <br>
         </div>
         <!--영어 뭐라고 써야할지 너무 어려워요-->
         <div class="w3-bar-block">
-            <a href="#카페글쓰기" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;카페글쓰기</a> 
-            <a href="#message" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;쪽지함</a> 
-            <a href="#정보수정" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;정보수정</a> 
+            <a href="#카페글쓰기" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;카페글쓰기</a>
+            <a href="#message" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;쪽지함</a>
+            <a href="#정보수정" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;정보수정</a>
             <a href="${root }user/logout" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;로그아웃</a>
+            <a href="${root }main" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;메인페이지</a>
         </div>
         
     </nav>
