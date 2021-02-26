@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 import com.sj.spring.vo.BoardVo;
+import com.sj.spring.vo.CommentCommentVo;
 import com.sj.spring.vo.CommentVo;
 import com.sj.spring.vo.RecommendationVo;
 
@@ -31,5 +32,9 @@ public interface BoardMapper {
 	void addRecommendation(int board_idx);
 	void subRecommendation(int board_idx);
 	void downHotBoard();
+	void saveCommentComment(CommentCommentVo commentCommentVo);
+	int getRecentCommentCommentIdx(int ccomment_writer_idx);
+	List<CommentCommentVo> getCommentCommentList(int comment_idx);
+	void deleteCommentComment(CommentCommentVo commentCommentVo);
 	
 }

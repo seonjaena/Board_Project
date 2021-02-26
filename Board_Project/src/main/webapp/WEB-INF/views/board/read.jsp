@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>미니 프로젝트</title>
+<title>Board_Project</title>
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -93,14 +93,25 @@
 								<c:if test = "${sessionScope.loginUserBean.user_idx != commentList.comment_writer_idx }">
 									<button type = "button" class = "btn btn-danger">신고</button>
 								</c:if>
+								<button type = "button" class = "save_comment_comment_btn btn btn-primary" onclick = "comment_comment($(this), '${sessionScope.loginUserBean.user_nickname}', '${root }', '${commentList.comment_idx }', '${requestScope.board_idx }')">답글달기</button>
 							</div>
-							<div class = "form-group comment_comment_div" style = "margin-left:5%">
-								<b>ㄴ</b>
-								<b class = "comment_writer">홍길동</b><br/>
-								<div class = "form-control">그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥</div>
-								<div align = "right">
-									<button type = "button" class = "btn btn-primary" onclick = "save_comment(${root})">저장</button>&nbsp;
-								</div>
+							<div class = "comment_comment_division form-group"></div>
+							<div class = "comment_comment_container${commentList.comment_idx }">
+								<c:forEach var = "commentCommentList" items = "${requestScope.commentCommentList }">
+									<c:if test = "${commentCommentList.comment_idx == commentList.comment_idx }">
+										<div class = "form-group comment_comment_div" style = "margin-left:5%">
+											<b>ㄴ</b>
+											<b class = "comment_writer">${commentCommentList.user_nickname }</b><br/>
+											<div class = "form-control">${commentCommentList.ccomment_text }</div>
+											<div align = "right">
+												<c:if test = "${sessionScope.loginUserBean.user_idx == commentCommentList.ccomment_writer_idx }">
+													<button type = "button" class = "btn btn-danger" onclick = "delete_comment_comment($(this), '${root}', ${commentCommentList.ccomment_idx })">삭제</button>&nbsp;
+												</c:if>
+											</div>
+										</div>
+									</c:if>
+									<div></div>
+								</c:forEach>
 							</div>
 						</div>
 						<div class = "empty_comment_div"></div>

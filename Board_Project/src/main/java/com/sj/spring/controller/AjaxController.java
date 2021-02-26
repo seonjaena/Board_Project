@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sj.spring.service.BoardService;
+import com.sj.spring.vo.CommentCommentVo;
 import com.sj.spring.vo.CommentVo;
 import com.sj.spring.vo.RecommendationVo;
 import com.sj.spring.vo.UserVo;
@@ -73,4 +75,35 @@ public class AjaxController {
 			return "-100";
 		}
 	}
+	
+	@PostMapping(value = "/board/write_comment_comment", produces = "application/text;charset=utf8")
+	public String write_comment_comment(@RequestParam(value = "data", required = false) String data, 
+										@RequestParam(value = "board_idx", required = false) String board_idx, 
+										HttpSession session) {
+		int comment_idx = Integer.parseInt(data.substring(data.lastIndexOf(",") + 1));
+		String comment_comment_text = data.substring(0, data.lastIndexOf(","));
+		UserVo loginUserBean = (UserVo)session.getAttribute("loginUserBean");
+		CommentCommentVo commentCommentVo = new CommentCommentVo();
+		commentCommentVo.setCcomment_writer_idx(loginUserBean.getUser_idx());
+		commentCommentVo.setComment_idx(comment_idx);
+		commentCommentVo.setCcomment_text(comment_comment_text);
+		commentCommentVo.setBoard_idx(Integer.parseInt(board_idx));
+		boardService.saveCommentComment(commentCommentVo);
+		return ((UserVo)session.getAttribute("loginUserBean")).getUser_nickname() + "," + String.valueOf(loginUserBean.getUser_idx()) + "," + String.valueOf(boardService.getRecentCommentCommentIdx(loginUserBean.getUser_idx()));
+	}
+	
+	@GetMapping(value = "/board/delete_comment_comment")
+	public void delete_comment_comment(@RequestParam(value = "ccomment_idx") String ccomment_idx, HttpSession session) {
+		UserVo loginUserBean = (UserVo)session.getAttribute("loginUserBean");
+		CommentCommentVo commentCommentVo = new CommentCommentVo();
+		commentCommentVo.setCcomment_idx(Integer.parseInt(ccomment_idx));
+		commentCommentVo.setCcomment_writer_idx(loginUserBean.getUser_idx());
+		boardService.deleteCommentComment(commentCommentVo);
+	}
+	
+	@PostMapping(value = "/user/upload_profile")
+	public void upload_profile(@RequestParam(value = "data") MultipartFile data) {
+		System.out.println(data.getOriginalFilename());
+	}
+	
 }

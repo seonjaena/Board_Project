@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.sj.spring.mapper.BoardMapper;
 import com.sj.spring.vo.BoardVo;
+import com.sj.spring.vo.CommentCommentVo;
 import com.sj.spring.vo.CommentVo;
 import com.sj.spring.vo.PageVo;
 import com.sj.spring.vo.RecommendationVo;
@@ -144,6 +145,26 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void getHotBoard() {
 		boardMapper.downHotBoard();
+	}
+
+	@Override
+	public void saveCommentComment(CommentCommentVo commentCommentVo) {
+		boardMapper.saveCommentComment(commentCommentVo);
+	}
+
+	@Override
+	public int getRecentCommentCommentIdx(int ccomment_writer_idx) {
+		return boardMapper.getRecentCommentCommentIdx(ccomment_writer_idx);
+	}
+
+	@Override
+	public List<CommentCommentVo> getCommentCommentList(int comment_idx) {
+		return boardMapper.getCommentCommentList(comment_idx);
+	}
+
+	@Override
+	public void deleteCommentComment(CommentCommentVo commentCommentVo) {
+		boardMapper.deleteCommentComment(commentCommentVo);
 	}
 
 }

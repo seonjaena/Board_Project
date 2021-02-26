@@ -31,7 +31,6 @@ public class MainController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String userList(Model model){
-		
 		List<UserVo> getUserList = userService.getUserList();
 		model.addAttribute("list", getUserList);
 		return "main";

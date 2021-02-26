@@ -12,7 +12,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>Insert title here</title>
+<title>Board_Project</title>
 </head>
 <body class="w3-content w3-light-grey" style="max-width: 1600px;">
 
@@ -27,7 +27,7 @@
 	            		<img src="C:\Users\sky11\OneDrive\Desktop\kitty.jfif" style="width:45%; border-radius: 70% ;" class=" w3-center w3-round">
 	            	</c:when>
 	            	<c:otherwise>
-	            		<img src="${root }/img/kitty.jfif" style="width:45%; border-radius: 70% ;" class=" w3-center w3-round">
+	            		<a href = "#" class = "open_profile_button"><img src="${root }/img/any_picture.png" style="width:45%; border-radius: 70% ;" class=" w3-center w3-round"></a>
 	            	</c:otherwise>
 	            </c:choose>
                 <br><br>
@@ -37,7 +37,7 @@
         </div>
         <!--영어 뭐라고 써야할지 너무 어려워요-->
         <div class="w3-bar-block">
-            <a href="#카페글쓰기" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;카페글쓰기</a>
+            <a href="${root }board/main" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;카페글쓰기</a>
             <a href="#message" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;쪽지함</a>
             <a href="#정보수정" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;정보수정</a>
             <a href="${root }user/logout" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;로그아웃</a>
@@ -107,6 +107,10 @@
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("myOverlay").style.display = "none";        
     }
+    $(".open_profile_button").click(function(e){
+    	e.preventDefault();
+    	open("${root}user/open_upload_picture", "", "width=400, height=100, scrollbars=no, resizable=no, toolbars=no, menubar=no");
+    });
     </script>
 
 </body>

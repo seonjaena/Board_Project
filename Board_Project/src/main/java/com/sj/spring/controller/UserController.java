@@ -149,6 +149,11 @@ public class UserController {
 		return "user/not_board_comment_writer";
 	}
 	
+	@GetMapping(value = "/open_upload_picture")
+	public String open_upload_picture() {
+		return "user/open_upload_picture";
+	}
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		UserValidator validator1 = new UserValidator();

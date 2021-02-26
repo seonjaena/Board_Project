@@ -3,6 +3,7 @@ package com.sj.spring.service;
 import java.util.List;
 
 import com.sj.spring.vo.BoardVo;
+import com.sj.spring.vo.CommentCommentVo;
 import com.sj.spring.vo.CommentVo;
 import com.sj.spring.vo.PageVo;
 import com.sj.spring.vo.RecommendationVo;
@@ -30,5 +31,9 @@ public interface BoardService {
 	void addRecommendation(int board_idx);
 	void subRecommendation(int board_idx);
 	void getHotBoard();
+	void saveCommentComment(CommentCommentVo commentCommentVo);
+	int getRecentCommentCommentIdx(int ccomment_writer_idx);
+	List<CommentCommentVo> getCommentCommentList(int comment_idx);
+	void deleteCommentComment(CommentCommentVo commentCommentVo);
 	
 }

@@ -12,7 +12,7 @@ function save_comment(path, board_idx) {
 		contentType : false, 
 		processData : false, 
 		success : function(return_data) {
-			var user_nickname = return_data.slice(0, return_data.indexOf(",") + 1);
+			var user_nickname = return_data.slice(0, return_data.indexOf(","));
 			var writer_idx = return_data.slice(return_data.indexOf(",") + 1, return_data.lastIndexOf(","));
 			var comment_idx = return_data.slice(return_data.lastIndexOf(",") + 1);
 			$(".comments_div").append("<div class = 'comment_div form-group'>" + 
@@ -21,15 +21,8 @@ function save_comment(path, board_idx) {
 			"<div align = 'right'>" + 
 			"<button type = 'button' class = 'btn btn-warning' onclick = 'delete_board_comment($(this), " + path + ", " + writer_idx + ")' value = '" + comment_idx + "'>삭제</button>&nbsp;" + 
 			"<button type = 'button' class = 'btn btn-info' onclick = 'modify_board_comment($(this), " + path + ", \"" + comment_text + "\", " + writer_idx + ")' value = '" + comment_idx + "'>수정</button>&nbsp;" + 
-			/*"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + */
 			"</div>" + 
-			"<div class = 'form-group comment_comment_div' style = 'margin-left:5%'>" + 
-			"<b>ㄴ</b>" + 
-			"<b class = 'comment_writer'>홍길동</b><br/>" + 
-			"<div class = 'form-control'>그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥</div>" + 
-			"<div align = 'right'>" + 
-			"<button type = 'button' class = 'btn btn-primary' onclick = 'save_comment(${root})'>저장</button>&nbsp;" + 
-			"</div></div></div><div class = 'empty_comment_div'></div>");
+			"<div class = 'empty_comment_div'></div></div>");
 		}, 
 		error : function() {
 			alert("댓글 작성 실패");
@@ -103,4 +96,71 @@ function cancleCommentModification(my_val, writer_idx, comment_text, comment_idx
 				"<button type = 'button' class = 'btn btn-info' onclick = 'modify_board_comment($(this), " + path + ", \"" + comment_text + "\", " + writer_idx + ")' value = '" + comment_idx + "'>수정</button>&nbsp;" + 
 				/*"<button type = 'button' class = 'btn btn-primary' onclick = 'make_comment_comment(${root})'>답글달기</button>&nbsp;" + */
 				"</div>")
+}
+
+function comment_comment(my_val, comment_comment_writer, path, comment_idx, board_idx) {
+	my_val.parent().next().replaceWith("<div class = 'comment_comment_div form-group' style = 'margin-left:5%'>" + 
+			"<b>ㄴ</b><b class = 'comment_writer'>" + comment_comment_writer + "</b><br/>" + 
+			"<textarea rows = '4' class = 'comment_comment_body form-control' style = 'resize : none' maxlength = '116'></textarea><br/>" + 
+			"<div align = 'right'>" + 
+			"<button type = 'button' class = 'btn btn-primary' onclick = 'save_comment_comment($(this), " + path + ", " + comment_idx + ", " + board_idx + ")'>확인</button>&nbsp;" + 
+			"<button type = 'button' class = 'btn btn-danger' onclick = 'cancle_comment_comment($(this))'>취소</button>&nbsp;" + 
+			"</div>" + 
+			"</div>")
+}
+
+function save_comment_comment(my_val, path, comment_idx, board_idx) {
+	var comment_comment_text = $(".comment_comment_body").val();
+	var data1 = comment_comment_text + "," + comment_idx;
+	data = new FormData();
+	data.append("data", data1);
+	data.append("board_idx", board_idx);
+	$.ajax({
+		data : data, 
+		url : path + "board/write_comment_comment", 
+		type : "POST", 
+		contentType : false, 
+		processData : false, 
+		success : function(return_data) {
+			var user_nickname = return_data.slice(0, return_data.indexOf(","));
+			var writer_idx = return_data.slice(return_data.indexOf(",") + 1, return_data.lastIndexOf(","));
+			var ccomment_idx = return_data.slice(return_data.lastIndexOf(",") + 1);
+			my_val.parent().parent().replaceWith("<div class = 'comment_comment_division form-group'></div>");
+			my_val.parent().parent().next().last().replaceWith("<b>이어붙이기</b>");
+			$(".comment_comment_container" + comment_idx + "").children().last().append("<div class = 'form-group comment_comment_div' style = 'margin-left:5%'>" + 
+					"<b>ㄴ</b><b class = 'comment_writer'>" + user_nickname + "</b><br/>" + 
+					"<div class = 'form-control'>" + comment_comment_text + "</div>" + 
+					"<div align = 'right'>" + 
+					"<button type = 'button' class = 'btn btn-danger' onclick = 'delete_comment_comment($(this), " + path + ", " + ccomment_idx + ")'>삭제</button>" + 
+					"&nbsp;</div>");
+		}, 
+		error : function() { 
+			alert("실패");
+		}, 
+		complete : function() {
+			my_val.parent().parent().replaceWith("<div class = 'comment_comment_division form-group'></div>");
+		}
+	})
+}
+
+function cancle_comment_comment(my_val) {
+	my_val.parent().parent().replaceWith("<div class = 'comment_comment_division form-group'></div>");
+}
+
+function delete_comment_comment(my_val, path, ccomment_idx) {
+	if(confirm("삭제하시겠습니까?") == false) {
+		return;
+	}
+	
+	$.ajax({
+		url : path + "board/delete_comment_comment?ccomment_idx=" + ccomment_idx, 
+		type : "GET", 
+		dataType : "text", 
+		success : function() {
+			my_val.parent().parent().remove();
+		}, 
+		error : function() {
+			alert("실패");
+		}
+	})
 }

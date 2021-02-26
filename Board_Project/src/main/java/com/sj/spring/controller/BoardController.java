@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sj.spring.service.BoardService;
 import com.sj.spring.vo.BoardVo;
+import com.sj.spring.vo.CommentCommentVo;
 import com.sj.spring.vo.CommentVo;
 import com.sj.spring.vo.PageVo;
 import com.sj.spring.vo.UserVo;
@@ -70,10 +71,12 @@ public class BoardController {
 			boardService.addBoardViews(board_idx);
 		}
 		List<CommentVo> commentList = boardService.getBoardCommentList(board_idx);
+		List<CommentCommentVo> commentCommentList = boardService.getCommentCommentList(board_idx);
 		model.addAttribute("board_idx", board_idx);
 		model.addAttribute("readBoardBean", readBoardBean);
 		model.addAttribute("board_type_idx", board_type_idx);
 		model.addAttribute("commentList", commentList);
+		model.addAttribute("commentCommentList", commentCommentList);
 		model.addAttribute("is_recommended", boardService.isUserRecommendedThis(board_idx, ((UserVo)session.getAttribute("loginUserBean")).getUser_idx()));
 		return "board/read";
 	}

@@ -109,5 +109,28 @@
 	<update id = "downHotBoard">
 		UPDATE board SET is_hot = 0 WHERE is_hot = 1
 	</update>
+	
+	<insert id = "saveCommentComment" parameterType = "CommentComment">
+		INSERT INTO comment_comment (comment_idx, ccomment_writer_idx, ccomment_text, board_idx) 
+		VALUES(#{comment_idx}, #{ccomment_writer_idx}, #{ccomment_text}, #{board_idx})
+	</insert>
+	
+	<select id = "getRecentCommentCommentIdx" parameterType = "int" resultType = "int">
+		SELECT ccomment_idx FROM comment_comment WHERE ccomment_writer_idx = #{ccomment_writer_idx} ORDER BY ccomment_idx DESC LIMIT 1
+	</select>
+	
+	<select id = "getCommentCommentList" parameterType = "int" resultType = "CommentComment">
+		SELECT A.ccomment_idx, A.comment_idx, A.ccomment_writer_idx, 
+		A.ccomment_text, B.user_nickname 
+		FROM comment_comment as A, user as B 
+		WHERE A.ccomment_writer_idx = B.user_idx 
+		AND A.board_idx = #{board_idx} 
+		AND A.is_delete = 0 
+		ORDER BY A.ccomment_idx
+	</select>
+	
+	<update id = "deleteCommentComment" parameterType = "CommentComment">
+		UPDATE comment_comment SET is_delete = 1 WHERE ccomment_writer_idx = #{ccomment_writer_idx} AND ccomment_idx = #{ccomment_idx}
+	</update>
 
 </mapper>
