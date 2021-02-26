@@ -3,6 +3,10 @@
 function save_comment(path, board_idx) {
 	var comment_text = $(".comment_body").val();
 	var data1 = comment_text + "," + board_idx;
+	if(comment_text == "") {
+		alert("내용을 입력하세요");
+		return;
+	}
 	data = new FormData();
 	data.append("data", data1);
 	$.ajax({
@@ -63,8 +67,13 @@ function modify_board_comment_confirm(my_val, path, comment_idx, writer_idx, com
 	if(confirm("수정하시겠습니까?") == false) {
 		return;
 	}
+	
 	var data1 = my_val.parent().prev().prev().val() + "," + comment_idx;
 	var comment_body = my_val.parent().prev().prev().val();
+	if(my_val.parent().prev().prev().val() == "") {
+		alert("내용을 입력하세요");
+		return;
+	}
 	data = new FormData();
 	data.append("data", data1);
 	
@@ -112,6 +121,10 @@ function comment_comment(my_val, comment_comment_writer, path, comment_idx, boar
 function save_comment_comment(my_val, path, comment_idx, board_idx) {
 	var comment_comment_text = $(".comment_comment_body").val();
 	var data1 = comment_comment_text + "," + comment_idx;
+	if(comment_comment_text == "") {
+		alert("내용을 입력하세요");
+		return;
+	}
 	data = new FormData();
 	data.append("data", data1);
 	data.append("board_idx", board_idx);
@@ -126,7 +139,6 @@ function save_comment_comment(my_val, path, comment_idx, board_idx) {
 			var writer_idx = return_data.slice(return_data.indexOf(",") + 1, return_data.lastIndexOf(","));
 			var ccomment_idx = return_data.slice(return_data.lastIndexOf(",") + 1);
 			my_val.parent().parent().replaceWith("<div class = 'comment_comment_division form-group'></div>");
-			my_val.parent().parent().next().last().replaceWith("<b>이어붙이기</b>");
 			$(".comment_comment_container" + comment_idx + "").children().last().append("<div class = 'form-group comment_comment_div' style = 'margin-left:5%'>" + 
 					"<b>ㄴ</b><b class = 'comment_writer'>" + user_nickname + "</b><br/>" + 
 					"<div class = 'form-control'>" + comment_comment_text + "</div>" + 

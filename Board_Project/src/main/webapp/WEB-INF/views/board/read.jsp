@@ -112,6 +112,7 @@
 									</c:if>
 									<div></div>
 								</c:forEach>
+								<div></div>
 							</div>
 						</div>
 						<div class = "empty_comment_div"></div>

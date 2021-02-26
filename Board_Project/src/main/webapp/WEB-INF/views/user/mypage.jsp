@@ -27,7 +27,7 @@
 	            		<img src="C:\Users\sky11\OneDrive\Desktop\kitty.jfif" style="width:45%; border-radius: 70% ;" class=" w3-center w3-round">
 	            	</c:when>
 	            	<c:otherwise>
-	            		<a href = "#" class = "open_profile_button"><img src="${root }/img/any_picture.png" style="width:45%; border-radius: 70% ;" class=" w3-center w3-round"></a>
+	            		<a href = "#" class = "open_profile_button"><img src="${root }/img/sample_picture.jpg" style="width:45%; border-radius: 70% ;" class=" w3-center w3-round"></a>
 	            	</c:otherwise>
 	            </c:choose>
                 <br><br>

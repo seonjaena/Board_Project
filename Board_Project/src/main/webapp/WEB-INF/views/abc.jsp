@@ -9,7 +9,6 @@
 <body>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=33d4176fe196efcbf6fee83138e26e9b"></script>
 	<div id="map" style="width:500px;height:400px;"></div>
-	<h1>수정1</h1>
 	<script>
 		var container = document.getElementById('map');
 		var options = {
