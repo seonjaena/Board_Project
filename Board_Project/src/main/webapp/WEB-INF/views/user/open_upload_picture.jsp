@@ -18,30 +18,24 @@
 	<div style = "text-align : center;">
 		<h1>프로필 사진</h1>
 		<form id = "ajaxForm">
-			<input type = "file" id = "ajaxFile" onChange = "ajaxFileChange();" style = "display : none;" />
-			<button type = "button" class = "btn btn-primary" id = "uploadBtn">업로드</button>
+			<input type = "file" id = "ajaxFile" name = "file" />
+			<button type = "button" class = "btn btn-primary" id = "uploadBtn" onclick = "uploadFile()">업로드</button>
 		</form>
 	</div>
 
 	<script>
 	
-		$(function() {
-			$("#uploadBtn").on("click", function() {
-				uploadFile();
-			})
-		})
-	
 		function uploadFile() {
-			var form = $("#ajaxForm")[0];
-			data = new FormData();
-			data.append("data", form);
+			const sendingData = new FormData();
+			sendingData.append("file", $("#ajaxFile")[0].files[0]);
 			$.ajax({
 				url : ${root} + "user/upload_profile", 
 				type : "POST", 
 				processData : false, 
 				contentType : false, 
-				data : data, 
+				data : sendingData, 
 				success : function() {
+					opener.location.reload();
 					close();
 				}, 
 				error : function() {

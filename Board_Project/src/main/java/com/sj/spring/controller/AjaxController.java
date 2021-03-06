@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.sj.spring.service.BoardService;
+import com.sj.spring.service.UserService;
 import com.sj.spring.vo.CommentCommentVo;
 import com.sj.spring.vo.CommentVo;
 import com.sj.spring.vo.RecommendationVo;
@@ -20,6 +22,9 @@ public class AjaxController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@PostMapping(value = "/board/write_board_comment", produces = "application/text;charset=utf8")
 	public String write_board_comment(@RequestParam(value = "data", required = false) String data, 
@@ -102,8 +107,11 @@ public class AjaxController {
 	}
 	
 	@PostMapping(value = "/user/upload_profile")
-	public void upload_profile(@RequestParam(value = "data") MultipartFile data) {
-		System.out.println(data.getOriginalFilename());
+	public void upload_profile(MultipartHttpServletRequest mtprequest, HttpSession session) {
+		MultipartFile file = mtprequest.getFile("file");
+		if(file.getSize() > 0) {
+			userService.upload_profile(file, session);
+		}
 	}
 	
 }

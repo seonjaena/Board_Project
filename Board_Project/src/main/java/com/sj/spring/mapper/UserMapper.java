@@ -19,5 +19,6 @@ public interface UserMapper {
 	void deleteValidationCode(String user_email);
 	void changeIsValidation(String user_email);
 	String getUserPicture(int user_idx);
+	void upload_profile(UserVo userVo);
 	
 }

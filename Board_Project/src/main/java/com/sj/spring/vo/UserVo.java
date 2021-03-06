@@ -52,6 +52,8 @@ public class UserVo {
 	
 	private String validation_code;
 	
+	private String picture_name;
+	
 	private boolean userIdExist;
 	private boolean userNicknameExist;
 	private boolean userEmailExist;

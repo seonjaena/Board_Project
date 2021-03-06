@@ -2,6 +2,10 @@ package com.sj.spring.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.sj.spring.vo.UserVo;
 
 public interface UserService {
@@ -19,5 +23,6 @@ public interface UserService {
 	void deleteValidationCode(String user_email);
 	void changeIsValidation(String user_email);
 	String getUserPicture(int user_idx);
+	void upload_profile(MultipartFile file, HttpSession session);
 	
 }

@@ -49,7 +49,11 @@
    	</update>
    	
    	<select id = "getUserPicture" parameterType = "int" resultType = "String">
-   		SELECT picture_name FROM user_picture WHERE user_idx = #{user_idx}
+   		SELECT picture_name FROM user_picture WHERE user_idx = #{user_idx} ORDER BY picture_idx DESC LIMIT 1
    	</select>
+   	
+   	<insert id = "upload_profile" parameterType = "User">
+   		INSERT INTO user_picture (user_idx, picture_name) VALUES (#{user_idx}, #{picture_name})
+   	</insert>
 	
 </mapper>

@@ -1,18 +1,33 @@
 package com.sj.spring.service;
 
+import java.io.File;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.sj.spring.mapper.UserMapper;
 import com.sj.spring.vo.UserVo;
 
 @Service
+@PropertySource("/WEB-INF/properties/option.properties")
 public class UserServiceImpl implements UserService {
 
+	@Value("${upload.path}")
+	private String upload_path;
+	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Inject
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public List<UserVo> getUserList() {
@@ -77,6 +92,28 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getUserPicture(int user_idx) {
 		return userMapper.getUserPicture(user_idx);
+	}
+
+	@Override
+	public void upload_profile(MultipartFile file, HttpSession session) {
+		
+		String file_name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+		file_name = passwordEncoder.encode(file_name);
+		file_name = file_name.replace("/", "a");
+		file_name = file_name.replace("\\", "b");
+		
+		try {
+			file.transferTo(new File(upload_path + "/" + file_name));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		UserVo userVo = new UserVo();
+		userVo.setUser_idx(((UserVo)session.getAttribute("loginUserBean")).getUser_idx());
+		userVo.setPicture_name(file_name);
+		
+		userMapper.upload_profile(userVo);
+		
 	}
 
 }
