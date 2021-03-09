@@ -45,6 +45,7 @@
 			<mapping path = "/user/modify"/>
 			<mapping path = "/user/upload_profile"/>
 			<mapping path = "/user/mypage"/>
+			<mapping path = "/user/message"/>
 			<mapping path = "/user/open_upload_picture"/>
 			<beans:bean class = "com.sj.spring.interceptor.UserInterceptor" />
 		</interceptor>

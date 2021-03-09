@@ -154,6 +154,12 @@ public class UserController {
 		return "user/open_upload_picture";
 	}
 	
+	@GetMapping(value = "/message")
+	public String message(HttpSession session, HttpServletRequest request) {
+		request.setAttribute("user_picture", userService.getUserPicture(((UserVo)session.getAttribute("loginUserBean")).getUser_idx()));
+		return "user/message";
+	}
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		UserValidator validator1 = new UserValidator();

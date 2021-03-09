@@ -6,17 +6,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>Board_Project</title>
 </head>
 <body class="w3-content w3-light-grey" style="max-width: 1600px;">
 
-    <!--Sidebar/menu-->
     <c:import url = "/WEB-INF/views/include/mypage_sidebar.jsp" />
 
     <!--small screen-->
@@ -26,36 +25,64 @@
 
         <!--header-->
         <header id="head" style="right:10px;">
-            <div class="w3-padding-32">
+            <div class="w3-padding-16">
                 <div class="w3-container">
                     <button class="w3-btn w3-circle w3-hide-large w3-grey w3-hover-black w3-right" onclick="w3_open()">+</button>
-                    <h1><b>회원정보</b></h1>
+                    <h1><b>쪽지함</b></h1>
                     <br>
                     <button class="w3-btn w3-hide-large w3-black w3-hover-white navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navMenu" aria-expanded="false">
                         menu
                     </button><!--menu글자 대신 선택한 목록 나오게 할 예정-->
+                    <!--size=sm-->
                     <div class="navrbar-collapse collapse" id="navMenu">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a href="" class="nav-link">내가 쓴 게시글</a>
+                                <a href="" class="nav-link">쪽지 보내기</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">내가 쓴 댓글</a>
+                                <a href="" class="nav-link">수신 쪽지함</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">카페 활동 알림</a>
+                                <a href="" class="nav-link">발신 쪽지함</a>
                             </li>
                         </ul>
                     </div>
-                    <div class="w3-hide-small w3-section w3-padding-16">
-                        <button class="w3-button w3-black">내가 쓴 게시글</button>
-                        <button class="w3-button w3-white">내가 쓴 댓글</button>
-                        <button class="w3-button w3-white">카페 활동 알림</button>
-                    </div>
+                    <!--size=lg-->
+                    <div class="w3-hide-small w3-section">
+                        <button class="w3-button w3-black">쪽지 보내기</button>
+                        <button class="w3-button w3-white">수신 쪽지함</button>        
+                        <button class="w3-button w3-white">발신 쪽지함</button>                
+                    </div>        
                 </div> 
             </div>
-            
         </header>
+        <div class="container">
+            <div class="card shadow">
+            <div id="write_msg">
+                <ul>
+                    <li>
+                        <span class="col1">보내는 사람 </span> :
+                        <span class="col2">jub1118@naver.com </span>
+                    </li>
+                    <li>
+                        <span class="col1">받는 사람 </span> :
+                        <span class="col2"><input type="text" name="rv_id"> </span>
+                    </li>
+                    <li>
+                        <span class="col1">제목 </span> :
+                        <span class="col2"><input type="text" name="subject"> </span>
+                    </li>
+                    <li><!--내용 글자 middle or top 수정-->
+                        <span class="col1">내용</span>
+                        <span class="col2">&nbsp&nbsp<textarea name="content"></textarea> </span>
+                    </li>
+                </ul>
+                <!--전송하기 버튼-->
+                <input type="submit" value="send">
+            </div>
+            </div>
+        
+        </div>
 
         <!-- Pagination -->
         <div class="w3-center w3-padding-32">
@@ -80,7 +107,10 @@
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("myOverlay").style.display = "none";        
     }
-    
+    $(".open_profile_button").click(function(e){
+    	e.preventDefault();
+    	open("${root}user/open_upload_picture", "", "width=400, height=100, scrollbars=no, resizable=no, toolbars=no, menubar=no");
+    });
     </script>
 
 </body>
