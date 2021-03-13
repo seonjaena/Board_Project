@@ -2,9 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <c:set var = "root" value = "${pageContext.request.contextPath }/" />
+<style>
+	a:link { color: white; text-decoration: none;}
+	a:visited { color: white; text-decoration: none;}
+	a:hover { color: white; text-decoration: none;}
+</style>
 <nav class="w3-sidebar w3-black w3-collapse w3-animate-top" style="z-index:3;width:300px;" id="mySidebar"><br>
     <div class="w3-container">
-        <h3 class="w3-center"><b>my profile</b></h3><!--board로 바꾸고 main화면 가는게 나을까요?-->
+        <h3 class = "w3-center"><b><a href = "${root }user/mypage" class = "my_page_link">mypage</a></b></h3>
         <br>
         <div class="w3-row w3-center">
 	        <c:choose>
@@ -25,7 +30,6 @@
         <a href="${root }board/main" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;카페글쓰기</a>
         <a href="${root }user/message" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;쪽지함</a>
         <a href="#정보수정" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;정보수정</a>
-        <a href="${root }user/mypage" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;마이페이지</a>
         <a href="${root }user/logout" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;로그아웃</a>
     	<a href="${root }main" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16">&nbsp;메인페이지</a>
 	</div>
