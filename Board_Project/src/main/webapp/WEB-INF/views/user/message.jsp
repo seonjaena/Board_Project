@@ -6,13 +6,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Board_Project</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="${root }css/message.css">
 </head>
 <body class="w3-content w3-light-grey" style="max-width: 1600px;">
 
@@ -56,34 +57,38 @@
                 </div> 
             </div>
         </header>
+        <!--write message-->
         <div class="container">
             <div class="card shadow">
             <div id="write_msg">
                 <ul>
                     <li>
-                        <span class="col1">보내는 사람 </span> :
-                        <span class="col2">jub1118@naver.com </span>
+                        <span class="col1">보내는 사람 </span>
+                        <span class="col2">sky114z21@gmail.co.kr </span>
                     </li>
                     <li>
-                        <span class="col1">받는 사람 </span> :
+                        <span class="col1">받는 사람 </span>
                         <span class="col2"><input type="text" name="rv_id"> </span>
                     </li>
                     <li>
-                        <span class="col1">제목 </span> :
+                        <span class="col1">제목 </span>
                         <span class="col2"><input type="text" name="subject"> </span>
                     </li>
-                    <li><!--내용 글자 middle or top 수정-->
+                    <li>
                         <span class="col1">내용</span>
-                        <span class="col2">&nbsp&nbsp<textarea name="content"></textarea> </span>
+                        <span class="col2"><textarea name="content"></textarea></span>
                     </li>
                 </ul>
                 <!--전송하기 버튼-->
-                <input type="submit" value="send">
+                <div class="w3-center">
+                    <input type="submit" class="w3-hover-black" value="send">    
+                </div>
             </div>
             </div>
         
         </div>
-
+        <br>
+        
         <!-- Pagination -->
         <div class="w3-center w3-padding-32">
             <div class="w3-bar">
@@ -107,10 +112,6 @@
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("myOverlay").style.display = "none";        
     }
-    $(".open_profile_button").click(function(e){
-    	e.preventDefault();
-    	open("${root}user/open_upload_picture", "", "width=400, height=100, scrollbars=no, resizable=no, toolbars=no, menubar=no");
-    });
     </script>
 
 </body>
