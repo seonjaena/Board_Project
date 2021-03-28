@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 여기 네임스페이스 중요! 인터페이스명과 namespace를 같게해야됨 -->
-<mapper namespace="com.sj.spring.mapper.MapMapper">
-	<select id = "getUserAddr" parameterType = "String" resultType = "String">
-		SELECT main_addr FROM user WHERE user_nickname = #{user_nickname}
-	</select>
-</mapper>
